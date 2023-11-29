@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // 새로운 전역 컨텍스트 생성
 const AuthContext = React.createContext({
   isLoggedIn: false, // 로그인 했는지의 여부 추적
-  uesrName: '',
+  userName: '',
   onLogout: () => {},
   onLogin: (email, password) => {},
 });
@@ -29,7 +29,7 @@ export const AuthContextProvider = (props) => {
     setUserName('');
   };
 
-  // 로그인 헨틀러
+  // 로그인 핸들러
   const loginHandler = (token, userName, role) => {
     localStorage.setItem('isLoggedIn', '1');
     // json에 담긴 인증정보를 클라이언트에 보관
