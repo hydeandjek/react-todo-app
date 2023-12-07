@@ -7,6 +7,7 @@ import Login from './components/user/Login';
 import Join from './components/user/Join';
 import { AuthContextProvider } from './utils/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import KakaoLoginHandler from './components/user/KakaoLoginHandler';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
             <Route
               path='/join'
               element={<Join />}
+            />
+            <Route
+              path='/oauth/redirected/kakao'
+              element={<KakaoLoginHandler />}
             />
           </Routes>
         </div>

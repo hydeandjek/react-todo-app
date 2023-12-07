@@ -8,6 +8,7 @@ import { Spinner } from 'reactstrap';
 import { API_BASE_URL as BASE, TODO, USER } from '../../config/host-config';
 import { useNavigate } from 'react-router-dom';
 import { getLoginUserInfo } from '../../utils/login-util';
+import HttpService from '../../utils/HttpService';
 
 const TodoTemplate = () => {
   const redirection = useNavigate();
@@ -69,6 +70,8 @@ const TodoTemplate = () => {
       setTodos(json.todos);
     } else if (res.status === 401) {
       alert('일반 회원은 일정 등록이 5개로 제한됩니다 ㅠㅠ');
+    } else if (res.status === 400) {
+      alert('옳지 않은 입력값입니다.');
     }
 
     // fetch(API_BASE_URL, {
@@ -155,6 +158,23 @@ const TodoTemplate = () => {
 
   useEffect(() => {
     // 페이지가 처음 렌더링 됨과 동시에 할 일 목록을 서버에 요청해서 뿌려 주겠습니다.
+    const res = HttpService(API_BASE_URL, {
+      method: 'GET',
+      headers: requestHeader,
+    });
+
+    if (res) {
+      if (res.status === 200) {
+        const result = res.json();
+      } else if (res.status === 403) {
+        alert('로그인이 필요한 서비스 입니다.');
+        redirection('/login');
+        return;
+      } else {
+        alert('관리자에게 문의하세요!');
+      }
+    }
+
     fetch(API_BASE_URL, {
       method: 'GET',
       headers: requestHeader,
